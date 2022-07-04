@@ -1,3 +1,5 @@
+package Ivan;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,18 +22,16 @@ public class CSVParser {
                 uniq2.add(r);
             }
         }
-        System.out.println("First document unique ids:\n"+uniq1);
-        System.out.println("Second document unique ids:\n"+uniq2);
+        System.out.println("etc unique ids:\n"+uniq1);
+        System.out.println("internet unique ids:\n"+uniq2);
         System.out.println(uniq2.size()+" "+uniq1.size());
     }
     Set<String> parseFirstDoc(){
         Set<String> records_first = new HashSet<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\77021\\OneDrive\\Рабочий стол\\Java\\CSVparsing\\src\\doc1.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src\\Ivan\\etc.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                for (String s : line.split(",")){
-                    records_first.add(s);
-                }
+                    records_first.add(line);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -41,12 +41,10 @@ public class CSVParser {
     Set<String> parseSecondDoc(){
         Set<String> records_second = new HashSet<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\77021\\OneDrive\\Рабочий стол\\Java\\CSVparsing\\src\\doc2.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src\\Ivan\\internet.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                for (String s : line.split(",")){
-                    records_second.add(s);
-                }
+                    records_second.add(line);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
