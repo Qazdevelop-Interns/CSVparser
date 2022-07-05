@@ -13,14 +13,17 @@ public class ParserExecute {
         Set<String> uniq2 = new HashSet<>();
         Set<String> uniq3 = new HashSet<>();
         Set<String> uniq4 = new HashSet<>();
+        Set<String> full_uniq = new HashSet<>();
         for(String r:recordsKazEtc){
             if(!recordsKazInternet.contains(r)){
                 uniq1.add(r);
+                full_uniq.add(r);
             }
         }
         for (String r:recordsKazInternet){
             if (!recordsKazEtc.contains(r)){
                 uniq2.add(r);
+                full_uniq.add(r);
             }
         }
         System.out.println("etc unique ids:\n"+uniq1);
@@ -30,18 +33,20 @@ public class ParserExecute {
         for (String r:recordsRusEtc){
             if (!recordsRusInternet.contains(r)){
                 uniq3.add(r);
+                full_uniq.add(r);
             }
         }
 
         for(String r:recordsRusInternet){
             if(!recordsRusEtc.contains(r)){
                 uniq4.add(r);
+                full_uniq.add(r);
             }
         }
         System.out.println("etc unique ids:\n"+uniq3);
         System.out.println("internet unique ids:\n"+uniq4);
         System.out.println("^ Rus entries "+" "+ (uniq3.size() + uniq4.size())+"\n\n");
-
+        System.out.println("All unique ids:\n"+full_uniq+"\n"+full_uniq.size());
     }
 
 }
