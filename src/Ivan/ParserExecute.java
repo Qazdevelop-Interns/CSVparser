@@ -2,14 +2,15 @@ package Ivan;
 
 import java.util.*;
 
-public class ParserExecute {
+class ParserExecute {
     static Set<String> all_unique_ids = new HashSet<>();
     public static void main(String[] args) {
-        Parser parser = new Parser();
-        Set<String> recordsKazEtc = parser.parseKazEtc();
-        Set<String> recordsKazInternet = parser.parseKazInternet();
-        Set<String> recordsRusEtc = parser.parseRusEtc();
-        Set<String> recordsRusInternet = parser.parseRusInternet();
+
+        Set<String> recordsKazEtc = Parser.parseFile("kaz_etc.csv");
+        Set<String> recordsKazInternet = Parser.parseFile("kaz_internet.csv");
+        Set<String> recordsRusEtc = Parser.parseFile("rus_etc");
+        Set<String> recordsRusInternet = Parser.parseFile("rus_internet");
+
 
         Set<String> uniqueKazEtc = new HashSet<>();
         Set<String> uniqueKazInternet = new HashSet<>();
