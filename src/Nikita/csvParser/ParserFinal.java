@@ -4,68 +4,58 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 public class ParserFinal {
+    String inputFileNameFirst;
+    String inputFileNamesSecond;
+    Set<String> containerWay = new HashSet<>();
     Set<String> firstDocument = new HashSet<>();
-    Set<String> resultFirstDocument = new HashSet<>();
-    Set<String> resultSecondDocument = new HashSet<>();
     Set<String> secondDocument = new HashSet<>();
-    ParserFinal(String a, String b) {
-        //Чтение данных первого документа.
-        try(BufferedReader readerFirst = new BufferedReader(new FileReader(a))){
-            String lineFirst;
-            while ((lineFirst = readerFirst.readLine()) != null){
-                firstDocument.add(lineFirst);
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        //Чтение данных второго документа.
-        try(BufferedReader readerSecond = new BufferedReader(new FileReader(b))){
-            String lineSecond;
-            while ((lineSecond = readerSecond.readLine()) != null){
-                secondDocument.add(lineSecond);
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
+
+    void setFileWay(){
+        //Specify paths to files.
+        try(Scanner scanner = new Scanner(System.in)){
+            System.out.println("Path to the first document : ");
+            inputFileNameFirst = scanner.nextLine();
+            System.out.println("Path to the second document : ");
+            inputFileNamesSecond = scanner.nextLine();
+            System.out.println(inputFileNameFirst + "\n" + inputFileNamesSecond);
+            containerWay.add(inputFileNameFirst);
+            containerWay.add(inputFileNamesSecond);
         }
     }
-    void comparingTwoFiles() throws FileNotFoundException {
-        System.out.println("First document : ");
-        for(String z : firstDocument) {
-            boolean a = secondDocument.contains(z);
-            if (!a) {
-                resultFirstDocument.add(z);
-                File fileFirst = new File("firstDocument.txt");
-                PrintWriter pwFirst = new PrintWriter(fileFirst);
-                pwFirst.println(resultFirstDocument);
-                pwFirst.close();
-                System.out.println(z);
+    void getInformationFromFiles(){
+        for (String a : containerWay){
+            try(BufferedReader reader = new BufferedReader(new FileReader(a))){
+                String line;
+                while ((line = reader.readLine()) != null){
+                    if(a.equals(inputFileNameFirst)){
+                        firstDocument.add(line);
+                    }
+                    else {
+                        secondDocument.add(line);
+                    }
+                }
+            }
+            catch (IOException e){
+                throw new RuntimeException(e);
             }
         }
-        System.out.println();
-        System.out.println("Second document : ");
-        for(String z : secondDocument) {
-            boolean a = firstDocument.contains(z);
-            if (!a) {
-                resultSecondDocument.add(z);
-                File fileSecond = new File("SecondDocument.txt");
-                PrintWriter pwSecond = new PrintWriter(fileSecond);
-                pwSecond.println(resultSecondDocument);
-                pwSecond.close();
-                System.out.println(z);
-            }
-        }
+        System.out.println("Information received");
+    }
+    void comparingTwoFiles(){
+        //Finding unique elements by removing all duplicate elements.
+        Set<String> resultFirstDocument = new HashSet<>(firstDocument);
+        Set<String> resultSecondDocument = new HashSet<>(secondDocument);
+        resultFirstDocument.removeAll(secondDocument);
+        resultSecondDocument.removeAll(firstDocument);
+        System.out.println("First document : " + resultFirstDocument + "\n Number of Unique elements : " + resultFirstDocument.size() +
+                "\n" + "Second document : " + resultSecondDocument + "\n Number of Unique elements : " + resultSecondDocument.size());
     }
 }
 class ParserMain{
-    public static void main(String[] args) throws FileNotFoundException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Path for first file : ");
-        String inputFileNameFirst = scanner.nextLine();
-        System.out.println("Path for second file : ");
-        String inputFileNameSecond = scanner.nextLine();
-        ParserFinal fileNames = new ParserFinal(inputFileNameFirst, inputFileNameSecond);
-        fileNames.comparingTwoFiles();
+    public static void main(String[] args) {
+        ParserFinal object = new ParserFinal();
+        object.setFileWay();
+        object.getInformationFromFiles();
+        object.comparingTwoFiles();
     }
 }
