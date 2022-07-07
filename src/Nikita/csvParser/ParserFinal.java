@@ -1,8 +1,10 @@
 package Nikita.csvParser;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+
 public class ParserFinal {
     String inputFileNameFirst;
     String inputFileNamesSecond;
@@ -10,9 +12,9 @@ public class ParserFinal {
     Set<String> firstDocument = new HashSet<>();
     Set<String> secondDocument = new HashSet<>();
 
-    void setFileWay(){
+    public void setFileWay() {
         //Specify paths to files.
-        try(Scanner scanner = new Scanner(System.in)){
+        try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Path to the first document : ");
             inputFileNameFirst = scanner.nextLine();
             System.out.println("Path to the second document : ");
@@ -22,26 +24,26 @@ public class ParserFinal {
             containerWay.add(inputFileNamesSecond);
         }
     }
-    void getInformationFromFiles(){
-        for (String a : containerWay){
-            try(BufferedReader reader = new BufferedReader(new FileReader(a))){
+
+    public void getInformationFromFiles() {
+        for (String a : containerWay) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(a))) {
                 String line;
-                while ((line = reader.readLine()) != null){
-                    if(a.equals(inputFileNameFirst)){
+                while ((line = reader.readLine()) != null) {
+                    if (a.equals(inputFileNameFirst)) {
                         firstDocument.add(line);
-                    }
-                    else {
+                    } else {
                         secondDocument.add(line);
                     }
                 }
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
         System.out.println("Information received");
     }
-    void comparingTwoFiles(){
+
+    public void comparingTwoFiles() {
         //Finding unique elements by removing all duplicate elements.
         Set<String> resultFirstDocument = new HashSet<>(firstDocument);
         Set<String> resultSecondDocument = new HashSet<>(secondDocument);
@@ -51,7 +53,8 @@ public class ParserFinal {
                 "\n" + "Second document : " + resultSecondDocument + "\n Number of Unique elements : " + resultSecondDocument.size());
     }
 }
-class ParserMain{
+
+class ParserMain {
     public static void main(String[] args) {
         ParserFinal object = new ParserFinal();
         object.setFileWay();
